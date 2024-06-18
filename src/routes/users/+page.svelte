@@ -1,11 +1,8 @@
 <script>
     export let data;
     // ユーザーIDを重複を除いて昇順に並べる
-    let user_id_set = new Set();
-    data.posts.forEach(post => {
-        user_id_set.add(post.user_id);
-    });
-    let sorted_user_ids = Array.from(user_id_set).sort(); // SetをArrayに変換してソート
+    $: user_id_set = new Set(data.posts.map(post => post.user_id));
+    $: sorted_user_ids = Array.from(user_id_set).sort(); // SetをArrayに変換してソート
     let selected_user_id = '';
     
     

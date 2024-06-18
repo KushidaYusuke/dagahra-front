@@ -1,6 +1,30 @@
-<script>
+<script lang="ts">
     export let data;
     let selected_user_id = data.selected_user_posts[0].user_id;
+    async function deleteAllPosts() {
+        try {
+            const response = await fetch(`http://localhost:8000/faq/users/${selected_user_id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            if(response.ok) {
+                alert('削除が成功しました');
+                location.reload();
+                location.href = '/';
+            } else {
+                throw new Error('サーバーエラーが発生しました');
+            }
+        }
+        catch (error: any) {
+            alert(`削除に失敗しました: ${error.message}`);
+        }
+    }
+    
+    function backScreen() {
+        location.href = '/users';
+    }
 </script>
 
 
@@ -17,7 +41,9 @@
     {/each}
 </ul>
 
-<button onclick="location.href='/users'">戻る</button>
+<button on:click={deleteAllPosts}>このユーザーの投稿をすべて削除</button>
+
+<button on:click={backScreen}>戻る</button>
 <style>
   .post {
     border: 1px solid #dbdada;
