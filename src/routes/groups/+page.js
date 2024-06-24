@@ -4,4 +4,3 @@ export async function load() {
         posts: await response.json()
     };
 }
-

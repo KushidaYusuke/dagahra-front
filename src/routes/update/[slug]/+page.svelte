@@ -7,11 +7,11 @@
     async function updateSubmit(event) {
         try {
             const response = await fetch(`http://localhost:8000/faq/${data.slug}`, {
-            method: 'PUT',
-            headers: {
-            'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({question_text, answer_text}),
+              method: 'PUT',
+              headers: {
+              'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({question_text, answer_text}),
             });
             if(response.ok) {
                 alert('更新が完了しました');

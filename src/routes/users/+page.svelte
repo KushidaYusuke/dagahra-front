@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     export let data;
     // ユーザーIDを重複を除いて昇順に並べる
     $: user_id_set = new Set(data.posts.map(post => post.user_id));
@@ -7,6 +7,10 @@
     
     
     function handleSubmit() {
+        // セレクトボタンが選択されていない場合、警告を表示
+        if (selected_user_id === '') {
+          alert('オプションを選択してください。');
+        }
         window.location.href = `/users/${selected_user_id}`;
     }
     
@@ -17,7 +21,7 @@
 
 
 <form on:submit|preventDefault={handleSubmit}>
-<select bind:value={selected_user_id}>
+<select bind:value={selected_user_id} aria-label="select user">
     <option value="">ユーザーIDを選択してください</option>
     {#each sorted_user_ids as user_id}
         <option value={user_id}>{user_id}</option>

@@ -2,19 +2,22 @@
     // 既存のコード
     let question_text = '';
     let answer_text = '';
-    let user_id = '';
-    let question_group_id = '';
+    let user_id_str = '';
+    let question_group_id_str = '';
     let question_group_text = '';
     async function handleSubmit(event) {
       // 既存のpreventDefaultの呼び出し
   
       try {
+        let user_id = parseInt(user_id_str, 10);
+        let question_group_id = parseInt(question_group_id_str, 10);
         const response = await fetch('http://localhost:8000/faq', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({ question_text, answer_text, user_id, question_group_id, question_group_text}),
+        
         });
   
         if (!response.ok) {
@@ -35,12 +38,12 @@
   <form on:submit|preventDefault={handleSubmit}>
     <div>
         <label for="user_id">ユーザーID:</label>
-        <input id="user_id" type="text" bind:value={user_id} />
+        <input id="user_id" type="text" bind:value={user_id_str} />
     </div>
 
     <div>
         <label for="question_group_id">質問グループID:</label>
-        <input id="question_group_id" type="text" bind:value={question_group_id} />
+        <input id="question_group_id" type="text" bind:value={question_group_id_str} />
     </div>
 
     <div>

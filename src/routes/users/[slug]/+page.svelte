@@ -31,6 +31,9 @@
 
 
 <h2 style="color:#7B68EE">ユーザーID{selected_user_id}のQ＆A一覧</h2>
+
+<h3>「このユーザーを削除」をクリックすると、このユーザーが投稿したすべてのQ＆Aが削除されます。
+</h3>
 <ul class="post-list">
     {#each data.selected_user_posts as post}
     <div class="post">
@@ -41,7 +44,7 @@
     {/each}
 </ul>
 
-<button on:click={deleteAllPosts}>このユーザーの投稿をすべて削除</button>
+<button on:click={deleteAllPosts}>このユーザーを削除</button>
 
 <button on:click={backScreen}>戻る</button>
 <style>

@@ -36,6 +36,11 @@ http://localhost:5173/users
 <img src="image-2.png" alt="alt text" style="border: 2px solid #000;">
 
 
+### 質問グループの削除
+
+選択した質問グループを削除する
+<img src="image-5.png" alt="alt text" style="border: 2px solid #000;">
+
 
 
 # create-svelte
