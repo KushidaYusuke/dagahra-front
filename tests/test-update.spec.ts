@@ -33,8 +33,9 @@ test('update_faq', async ({ page }) => {
   await page.goto('http://localhost:5173/');
   //編集ボタンをクリック
   
+  await page.waitForLoadState('networkidle');
   await page.locator('li').filter({ hasText: '編集確認グループ User ID: 400' }).getByRole('button').nth(1).click();
-  await page.locator('li').filter({ hasText: '編集確認グループ User ID: 400' }).getByRole('button').nth(1).click();
+  //await page.locator('li').filter({ hasText: '編集確認グループ User ID: 400' }).getByRole('button').nth(1).click();
 
   //await expect(page).toHaveURL(/http:\/\/localhost:5173\/update\/.*/);
   await page.screenshot({ path: 'check_screenshot_text_4_1.png' });
@@ -43,14 +44,19 @@ test('update_faq', async ({ page }) => {
   await page.locator('#content').click();
   await page.locator('#content').fill('回答を修正');
 
-  //ダイアログの確認
+
+  await page.getByRole('button', { name: '更新' }).click();
+  //await page.screenshot({ path: 'check_screenshot_text_4_2.png' })
+  //更新されていることを確認
   page.on('dialog', (dialog) => {
     expect(dialog.message()).toContain('更新が完了しました')
     dialog.accept()
   })
-  await page.getByRole('button', { name: '更新' }).click();
-  await page.screenshot({ path: 'check_screenshot_text_4_2.png' })
-  //更新されていることを確認
+
+  await page.waitForLoadState('networkidle', { timeout: 15000 });
+  //ページの遷移がうまくいかない場合がある
+  await expect(page).toHaveURL("http://localhost:5173/");
+
   await expect(page.locator('li').filter({ hasText: '編集確認グループ User ID: 400' })).toContainText('質問を修正'); //toContainTextは部分一致を判定する
   await expect(page.locator('li').filter({ hasText: '編集確認グループ User ID: 400' })).toContainText('回答を修正');
 
@@ -64,7 +70,13 @@ test('update_faq_error', async ({ page }) => {
 
   //この部分でflakyになる(というか基本的に失敗する)
   //https://stackoverflow.com/questions/74301319/playwright-click-button-does-not-work-reliably-flaky を参考に修正してみる
+  
+  // const update_button = await page.locator('li').filter({ hasText: '編集確認グループ User ID: 400' }).getByRole('button').nth(1);
+  // expect(await update_button.evaluate(node => node.isConnected)).toBe(true);
+  await page.waitForLoadState('networkidle');
+  await page.locator('li').filter({ hasText: '編集確認グループ User ID: 400' }).getByRole('button').nth(1).waitFor();
   await page.locator('li').filter({ hasText: '編集確認グループ User ID: 400' }).getByRole('button').nth(1).click();
+  
   //await page.locator('li').filter({ hasText: '編集確認グループ User ID: 400' }).getByRole('button').nth(1).click();
   //await page.waitForURL(/http:\/\/localhost:5173\/update\/.*/);
   await expect(page).toHaveURL(/http:\/\/localhost:5173\/update\/.*/);

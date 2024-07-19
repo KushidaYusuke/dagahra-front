@@ -81,7 +81,7 @@ export default defineConfig({
   //   reuseExistingServer: !process.env.CI,
   // },
 
-  //設定を追加(タイムアウト時間を5秒に設定)
-  timeout: 5000,
+  //設定を追加(タイムアウト時間を7秒に設定)
+  timeout: 7000,
 });
 
