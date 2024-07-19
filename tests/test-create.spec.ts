@@ -1,11 +1,15 @@
 import { test, expect, request } from '@playwright/test';
+import dotenv from 'dotenv';
+dotenv.config();
+const apiUrl = process.env.VITE_API_URL;
 
 
 //前処理:使用するテストグループのデータを削除
 test.beforeEach(async ({ page }) => {
+  console.log('API URL:', apiUrl);
   const context = await request.newContext();
   
-  await context.delete("http://localhost:8000/faq/groups/1000000",{
+  await context.delete(`${apiUrl}/faq/groups/1000000`,{
     headers: {
       Accept : 'application/json',
     },
@@ -87,7 +91,7 @@ test('create_empty_question', async ({ page }) => {
 //後処理:使用したテストグループのデータを削除
 test.afterEach(async ({ page }) => {
   const context = await request.newContext();
-  await context.delete("http://localhost:8000/faq/groups/1000000",{
+  await context.delete(`${apiUrl}/faq/groups/1000000`,{
     headers: {
       Accept : 'application/json',
     },

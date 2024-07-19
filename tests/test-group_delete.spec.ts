@@ -1,19 +1,21 @@
 import { test, expect, request } from '@playwright/test';
-
+import dotenv from 'dotenv';
+dotenv.config();
+const apiUrl = process.env.VITE_API_URL;
 
 //質問グループの削除を行う
 test('group_delete', async ({ page }) => {
   const context = await request.newContext();
 
   //使用する予定のテストデータが存在しないことを確認
-  await context.delete("http://localhost:8000/faq/groups/5000000",{
+  await context.delete(`${apiUrl}/faq/groups/5000000`,{
     headers: {
       Accept : 'application/json',
     },
   });
 
   //APIを直接叩いてテストデータを作成
-  await context.post("http://localhost:8000/faq",{
+  await context.post(`${apiUrl}/faq`,{
     headers: {
       Accept : 'application/json',
     },
@@ -41,7 +43,7 @@ test('group_delete', async ({ page }) => {
   //削除されていることを確認
   await expect(page.locator('li').filter({ hasText: 'グループ削除確認グループ User ID: 500' })).not.toBeVisible();
   //使用したテストデータを削除
-  await context.delete("http://localhost:8000/faq/groups/5000000",{
+  await context.delete(`${apiUrl}/faq/groups/5000000`,{
     headers: {
       Accept : 'application/json',
     },

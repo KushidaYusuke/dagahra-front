@@ -1,16 +1,18 @@
 import { test, expect, request } from '@playwright/test';
-
+import dotenv from 'dotenv';
+dotenv.config();
+const apiUrl = process.env.VITE_API_URL;
 test.beforeEach(async ({ page }) => {
   const context = await request.newContext();
   
-  await context.delete("http://localhost:8000/faq/groups/4000000",{
+  await context.delete(`${apiUrl}/faq/groups/4000000`,{
     headers: {
       Accept : 'application/json',
     },
   });
 
   //APIを直接叩いてテストデータを作成
-  await context.post("http://localhost:8000/faq",{
+  await context.post(`${apiUrl}/faq`,{
     headers: {
       Accept : 'application/json',
     },
@@ -59,8 +61,12 @@ test('update_faq_error', async ({ page }) => {
   //テストスタート
   await page.goto('http://localhost:5173/');
   //編集ボタンをクリック
+
+  //この部分でflakyになる(というか基本的に失敗する)
+  //https://stackoverflow.com/questions/74301319/playwright-click-button-does-not-work-reliably-flaky を参考に修正してみる
   await page.locator('li').filter({ hasText: '編集確認グループ User ID: 400' }).getByRole('button').nth(1).click();
-  await page.locator('li').filter({ hasText: '編集確認グループ User ID: 400' }).getByRole('button').nth(1).click();
+  //await page.locator('li').filter({ hasText: '編集確認グループ User ID: 400' }).getByRole('button').nth(1).click();
+  //await page.waitForURL(/http:\/\/localhost:5173\/update\/.*/);
   await expect(page).toHaveURL(/http:\/\/localhost:5173\/update\/.*/);
   await page.getByLabel('質問:').click();
   await page.getByLabel('質問:').fill('');
@@ -74,7 +80,7 @@ test('update_faq_error', async ({ page }) => {
 //後処理:使用したテストデータを削除
 test.afterEach(async ({ page }) => {
   const context = await request.newContext();
-  await context.delete("http://localhost:8000/faq/groups/4000000",{
+  await context.delete(`${apiUrl}/faq/groups/4000000`,{
     headers: {
       Accept : 'application/json',
     },

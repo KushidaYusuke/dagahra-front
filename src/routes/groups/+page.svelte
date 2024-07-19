@@ -1,6 +1,6 @@
 <script lang="ts">
   export let data;
-  
+  const apiUrl = import.meta.env.VITE_API_URL;
   // key: question_group_id
   // value: question_group_text 
   let group_map = new Map();
@@ -20,7 +20,7 @@
       return;
     }
     try {
-      const response = await fetch(`http://localhost:8000/faq/groups/${selected_question_group_id}`, {
+      const response = await fetch(`${apiUrl}/faq/groups/${selected_question_group_id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

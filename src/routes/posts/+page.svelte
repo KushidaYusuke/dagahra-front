@@ -1,5 +1,6 @@
 <script lang="ts">
     // 既存のコード
+    const apiUrl = import.meta.env.VITE_API_URL;
     let question_text = '';
     let answer_text = '';
     let user_id_str = '';
@@ -11,7 +12,7 @@
       try {
         let user_id = parseInt(user_id_str, 10);
         let question_group_id = parseInt(question_group_id_str, 10);
-        const response = await fetch('http://localhost:8000/faq', {
+        const response = await fetch(`${apiUrl}/faq`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

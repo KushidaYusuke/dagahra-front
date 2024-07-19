@@ -1,5 +1,6 @@
 
   <script lang="ts">
+    const apiUrl = import.meta.env.VITE_API_URL;
     export let data;
     interface Post {
       user_id: number;
@@ -24,7 +25,7 @@
 
   async function deletePost(post_id) {
     try {
-      const response = await fetch(`http://localhost:8000/faq/${post_id}`, {
+      const response = await fetch(`${apiUrl}/faq/${post_id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

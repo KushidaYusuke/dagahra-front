@@ -1,9 +1,10 @@
 <script lang="ts">
     export let data;
+    const apiUrl = import.meta.env.VITE_API_URL;
     let selected_user_id = data.selected_user_posts[0].user_id;
     async function deleteAllPosts() {
         try {
-            const response = await fetch(`http://localhost:8000/faq/users/${selected_user_id}`, {
+            const response = await fetch(`${apiUrl}/faq/users/${selected_user_id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',

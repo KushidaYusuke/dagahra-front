@@ -1,12 +1,12 @@
 <script lang="ts">
     export let data;
-    
+    const apiUrl = import.meta.env.VITE_API_URL;
     let question_text = '';
     let answer_text = '';
     
     async function updateSubmit(event) {
         try {
-            const response = await fetch(`http://localhost:8000/faq/${data.slug}`, {
+            const response = await fetch(`${apiUrl}/faq/${data.slug}`, {
               method: 'PUT',
               headers: {
               'Content-Type': 'application/json',

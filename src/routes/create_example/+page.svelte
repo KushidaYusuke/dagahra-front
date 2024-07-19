@@ -1,5 +1,6 @@
 <script lang="ts">
   export let data;
+  const apiUrl = import.meta.env.VITE_API_URL;
   let group_map = new Map();
  
 
@@ -11,7 +12,7 @@
         }
     });
     for (const [key, value] of group_map.entries()) {
-      const response = await fetch(`http://localhost:8000/faq/groups/${key}`, {
+      const response = await fetch(`${apiUrl}/faq/groups/${key}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -22,7 +23,7 @@
 
   //例となるデータの作成
     async function createExampleData() {
-          await fetch('http://localhost:8000/faq', {
+          await fetch(`${apiUrl}/faq`, {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json',
@@ -35,7 +36,7 @@
             question_group_text: 'フォームズについて',
             }),
         });
-          await fetch('http://localhost:8000/faq', {
+          await fetch('${apiUrl}/faq', {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json',
@@ -48,7 +49,7 @@
             question_group_text: 'フォームについて',
             }),
         });
-          await fetch('http://localhost:8000/faq', {
+          await fetch(`${apiUrl}/faq`, {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json',
@@ -61,7 +62,7 @@
             question_group_text: 'フォームについて',
             }),
         });
-          await fetch('http://localhost:8000/faq', {
+          await fetch(`${apiUrl}/faq`, {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json',
@@ -74,7 +75,7 @@
             question_group_text: 'メールについて',
             }),
         });
-          await fetch('http://localhost:8000/faq', {
+          await fetch(`${apiUrl}/faq`, {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json',
@@ -87,7 +88,7 @@
             question_group_text: 'メールについて',
             }),
         });
-        const response = await fetch('http://localhost:8000/faq', {
+        const response = await fetch(`${apiUrl}/faq`, {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json',

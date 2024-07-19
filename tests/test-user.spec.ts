@@ -3,14 +3,14 @@ import { test, expect, request } from '@playwright/test';
 test.beforeEach(async ({ page }) => {
   const context = await request.newContext();
   
-  await context.delete("http://localhost:8000/faq/groups/3000000",{
+  await context.delete("${apiUrl}/faq/groups/3000000",{
     headers: {
       Accept : 'application/json',
     },
   });
 
   //APIを直接叩いてテストデータを作成
-  await context.post("http://localhost:8000/faq",{
+  await context.post("${apiUrl}/faq",{
     headers: {
       Accept : 'application/json',
     },
@@ -36,7 +36,7 @@ test('user_page', async ({ page }) => {
 test.afterEach(async ({ page }) => {
     const context = await request.newContext();
     
-    await context.delete("http://localhost:8000/faq/groups/3000000",{
+    await context.delete("${apiUrl}/faq/groups/3000000",{
         headers: {
         Accept : 'application/json',
         },
